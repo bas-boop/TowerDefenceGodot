@@ -1,8 +1,9 @@
-[gd_scene load_steps=11 format=3 uid="uid://bx1jmphwhi2m"]
+[gd_scene load_steps=15 format=3 uid="uid://bx1jmphwhi2m"]
 
 [ext_resource type="Script" path="res://Scripts/Framework/FullScreen.gd" id="1_g23pv"]
 [ext_resource type="Script" path="res://Scripts/NPC/EnemyMovement.cs" id="1_pyab3"]
 [ext_resource type="Script" path="res://Scripts/Framework/Waypoints.cs" id="2_i86ga"]
+[ext_resource type="Script" path="res://Scenés/Worlds/PathFollow3d.cs" id="4_ia8ya"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_on5x6"]
 shading_mode = 2
@@ -16,6 +17,8 @@ albedo_color = Color(0.456902, 0.193343, 0.0259979, 1)
 background_mode = 1
 background_color = Color(0, 0.866667, 1, 1)
 
+[sub_resource type="SphereMesh" id="SphereMesh_4qo1n"]
+
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_vblun"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_k2u2o"]
@@ -25,6 +28,15 @@ metallic_specular = 0.25
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_1ap80"]
 
+[sub_resource type="Curve3D" id="Curve3D_i4kcg"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1.9649, 9.53674e-07, -9.19463, 0, 0, 0, 0, 0, 0, 5.81123, 0, -13.7247),
+"tilts": PackedFloat32Array(0, 0, 0)
+}
+point_count = 3
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_x6xl5"]
+
 [node name="World" type="Node3D"]
 
 [node name="FullScreen" type="Node" parent="."]
@@ -32,6 +44,7 @@ script = ExtResource("1_g23pv")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(0.935226, -0.0611842, 0.348725, -0.10721, 0.889773, 0.443633, -0.337429, -0.452284, 0.825579, 0, 1.44421, 0)
+shadow_enabled = true
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(50, 0, 0, 0, 1, 0, 0, 0, 50, 0, -0.5, 0)
@@ -44,7 +57,7 @@ mesh = SubResource("BoxMesh_p26oh")
 shape = SubResource("BoxShape3D_dimsr")
 
 [node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.977556, 0.210677, 0, -0.210677, 0.977556, 0, 2.56669, 6.78226)
+transform = Transform3D(1, 0, 0, 0, 0.913964, 0.405796, 0, -0.405796, 0.913964, 0, 7.6979, 6.78226)
 environment = SubResource("Environment_tmgcw")
 
 [node name="Waypoints" type="Node3D" parent="." node_paths=PackedStringArray("_waypoints")]
@@ -53,25 +66,46 @@ script = ExtResource("2_i86ga")
 _waypoints = [NodePath("Waypoint"), NodePath("Waypoint2"), NodePath("Waypoint3"), NodePath("Waypoint4"), NodePath("Waypoint5"), NodePath("Waypoint6")]
 
 [node name="Waypoint" type="Node3D" parent="Waypoints"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.43059, 0, -9.0987)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.5, 0, -9)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Waypoints/Waypoint"]
+mesh = SubResource("SphereMesh_4qo1n")
 
 [node name="Waypoint2" type="Node3D" parent="Waypoints"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0593979, 0, -13.6642)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -13)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Waypoints/Waypoint2"]
+mesh = SubResource("SphereMesh_4qo1n")
 
 [node name="Waypoint3" type="Node3D" parent="Waypoints"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.70069, 0, -8.36494)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 0, -8)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Waypoints/Waypoint3"]
+mesh = SubResource("SphereMesh_4qo1n")
 
 [node name="Waypoint4" type="Node3D" parent="Waypoints"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.43932, 1.90735e-06, -3.12269)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.5, 0, -3)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Waypoints/Waypoint4"]
+mesh = SubResource("SphereMesh_4qo1n")
 
 [node name="Waypoint5" type="Node3D" parent="Waypoints"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.837, 0, -6.30599)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 0, -6)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Waypoints/Waypoint5"]
+mesh = SubResource("SphereMesh_4qo1n")
 
 [node name="Waypoint6" type="Node3D" parent="Waypoints"]
 
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Waypoints/Waypoint6"]
+mesh = SubResource("SphereMesh_4qo1n")
+
 [node name="Enemy" type="RigidBody3D" parent="." node_paths=PackedStringArray("_waypoints")]
+gravity_scale = 0.0
+lock_rotation = true
 script = ExtResource("1_pyab3")
 _waypoints = NodePath("../Waypoints")
+_waypointMargin = 2.0
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Enemy"]
 shape = SubResource("CylinderShape3D_vblun")
@@ -80,3 +114,14 @@ shape = SubResource("CylinderShape3D_vblun")
 transform = Transform3D(1, 0, 0, 0, 0.5, 0, 0, 0, 1, 0, 0.5, 0)
 material_override = SubResource("StandardMaterial3D_k2u2o")
 mesh = SubResource("CylinderMesh_1ap80")
+
+[node name="Path3D" type="Path3D" parent="."]
+curve = SubResource("Curve3D_i4kcg")
+
+[node name="PathFollow3D" type="PathFollow3D" parent="Path3D"]
+transform = Transform3D(0.977918, 2.11972e-08, 0.208982, -8.88177e-16, 1, -1.0143e-07, -0.208982, 9.91909e-08, 0.977918, 0, 0, 0)
+script = ExtResource("4_ia8ya")
+_speed = 15.0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Path3D/PathFollow3D"]
+mesh = SubResource("CapsuleMesh_x6xl5")
