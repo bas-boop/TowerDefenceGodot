@@ -1,9 +1,8 @@
-[gd_scene load_steps=15 format=3 uid="uid://bx1jmphwhi2m"]
+[gd_scene load_steps=10 format=3 uid="uid://bx1jmphwhi2m"]
 
 [ext_resource type="Script" path="res://Scripts/Framework/FullScreen.gd" id="1_g23pv"]
-[ext_resource type="Script" path="res://Scripts/NPC/EnemyMovement.cs" id="1_pyab3"]
 [ext_resource type="Script" path="res://Scripts/Framework/Waypoints.cs" id="2_i86ga"]
-[ext_resource type="Script" path="res://Scenés/Worlds/PathFollow3d.cs" id="4_ia8ya"]
+[ext_resource type="PackedScene" uid="uid://c2if0acw20l0i" path="res://Scenés/Entities/Enemy.tscn" id="3_3h6xh"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_on5x6"]
 shading_mode = 2
@@ -19,23 +18,12 @@ background_color = Color(0, 0.866667, 1, 1)
 
 [sub_resource type="SphereMesh" id="SphereMesh_4qo1n"]
 
-[sub_resource type="CylinderShape3D" id="CylinderShape3D_vblun"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_k2u2o"]
-diffuse_mode = 1
-albedo_color = Color(1, 0.12, 0.12, 1)
-metallic_specular = 0.25
-
-[sub_resource type="CylinderMesh" id="CylinderMesh_1ap80"]
-
 [sub_resource type="Curve3D" id="Curve3D_i4kcg"]
 _data = {
-"points": PackedVector3Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1.9649, 9.53674e-07, -9.19463, 0, 0, 0, 0, 0, 0, 5.81123, 0, -13.7247),
-"tilts": PackedFloat32Array(0, 0, 0)
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1.9649, 9.53674e-07, -9.19463, 0, 0, 0, 0, 0, 0, 4.52306, 0, -5.405, 0, 0, 0, 0, 0, 0, 5.81123, 0, -13.7247),
+"tilts": PackedFloat32Array(0, 0, 0, 0)
 }
-point_count = 3
-
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_x6xl5"]
+point_count = 4
 
 [node name="World" type="Node3D"]
 
@@ -100,28 +88,12 @@ mesh = SubResource("SphereMesh_4qo1n")
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Waypoints/Waypoint6"]
 mesh = SubResource("SphereMesh_4qo1n")
 
-[node name="Enemy" type="RigidBody3D" parent="." node_paths=PackedStringArray("_waypoints")]
-gravity_scale = 0.0
-lock_rotation = true
-script = ExtResource("1_pyab3")
-_waypoints = NodePath("../Waypoints")
-_waypointMargin = 2.0
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Enemy"]
-shape = SubResource("CylinderShape3D_vblun")
-
-[node name="Visual" type="MeshInstance3D" parent="Enemy"]
-transform = Transform3D(1, 0, 0, 0, 0.5, 0, 0, 0, 1, 0, 0.5, 0)
-material_override = SubResource("StandardMaterial3D_k2u2o")
-mesh = SubResource("CylinderMesh_1ap80")
-
 [node name="Path3D" type="Path3D" parent="."]
 curve = SubResource("Curve3D_i4kcg")
 
-[node name="PathFollow3D" type="PathFollow3D" parent="Path3D"]
-transform = Transform3D(0.977918, 2.11972e-08, 0.208982, -8.88177e-16, 1, -1.0143e-07, -0.208982, 9.91909e-08, 0.977918, 0, 0, 0)
-script = ExtResource("4_ia8ya")
-_speed = 15.0
+[node name="Enemy" parent="Path3D" instance=ExtResource("3_3h6xh")]
+transform = Transform3D(0.977918, 2.11972e-08, 0.208982, 0, 1, -1.0143e-07, -0.208982, 9.91909e-08, 0.977918, 0, 0, 0)
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Path3D/PathFollow3D"]
-mesh = SubResource("CapsuleMesh_x6xl5")
+[node name="Enemy2" parent="Path3D" instance=ExtResource("3_3h6xh")]
+transform = Transform3D(0.977918, 2.11972e-08, 0.208982, 0, 1, -1.0143e-07, -0.208982, 9.91909e-08, 0.977918, 0, 0, 0)
+_speed = 20.0
